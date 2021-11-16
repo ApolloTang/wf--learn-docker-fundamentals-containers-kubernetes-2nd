@@ -3,7 +3,7 @@
 How to do a clean restart of a Docker instance [1]
 
 ```
-docker-compose -f my-docker-compose down
+docker-compose -f my-docker-compose.yml down
 docker volume rm $(docker volume ls -q)
 ```
 
@@ -16,7 +16,8 @@ docker-compose -f my-docker-compose.yml down -v
 don't forget to clean up:
 
 ```
-docker rm -f $(docker ps -a -q)
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
 docker rmi $(docker images -q)
 ```
 
@@ -110,6 +111,9 @@ d769b0eebd70   myweb     "docker-entrypoint.s…"   9 minutes ago   Up 9 minutes
 
 ```
 curl -i 0.0.0.0:3000/pet
+```
+
+```
 HTTP/1.1 200 OK
 X-Powered-By: Express
 Content-Type: text/html; charset=utf-8
@@ -190,6 +194,10 @@ NAME                STATUS
 my-app              running(2)
 ```
 
+To shut down the you use:
+```
+docker-compose -p my-app -f my-docker-compose.yml down
+```
 ---
 Ref:
 
