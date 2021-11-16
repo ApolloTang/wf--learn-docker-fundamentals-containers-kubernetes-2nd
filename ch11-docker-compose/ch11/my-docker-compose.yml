@@ -1,0 +1,21 @@
+version: "2.4"
+services:
+  web:              # name of the service
+    image: myweb    # if not already in the image cache, it is built from the Dockerfile specify at the location (next line)
+    build: web      # the path to Dockerfile folder
+    ports:          # This field take a list of port mapping
+      - 3000:3000
+  db:
+    image: mydb
+    build: database
+    volumes:
+      - pets-data:/var/lib/postgresql/data      # mapping:
+                                                #   <name>:<path of the volume mounted inside container>
+volumes:
+  pets-data:   # name of the volume
+               # A volume called pets-data will be created by Docker and then,
+               # in subsequent runs, if the volume is still there, it will be
+               # reused. This could be important when the application, for some
+               # reason, crashes and has to be restarted. Then, the previous data
+               # is still around and ready to be used by the restarted database
+               # service.
